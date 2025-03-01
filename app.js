@@ -3,6 +3,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var indexRouter = require('./routes/index');
 const mongoose = require('mongoose');
+const cors = require("cors");
 
 const port = 5000;
 
@@ -12,6 +13,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cors());
 
 /** Mongo Configuration */
 app.db = mongoose.createConnection('mongodb://127.0.0.1:27017/test');
@@ -23,6 +25,9 @@ app.db.on('error', async (error) => {
 
 /** Mongo connected successfully */
 app.db.once('open', () => {
+  app.locals.gfs = new mongoose.mongo.GridFSBucket(app.db, {
+    bucketName: 'uploads'
+  });
   console.log('Mongo Db connected!');
 });
 

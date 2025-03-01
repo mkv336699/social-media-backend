@@ -1,7 +1,6 @@
 const app = module.exports = require('express')();
-const { generateAuthToken } = require("../services/jwt-service");
+const { generateAuthToken, generateRefreshToken } = require("../services/jwt-service");
 const { login, signUpUser } = require("../actions/auth");
-const { generateRefreshToken } = require("../services/jwt-service");
 
 app.post("/login", (req, res) => {
     login(req.body.username, req.body.password).then(data => {

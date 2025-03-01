@@ -56,4 +56,15 @@ const deleteUser = async (username) => {
     }
 }
 
+const uploadProfilePic = async (req) => {
+    const mongoose = require("mongoose");
+    const fs = require("fs");
+
+    let gfs = Grid(app.db, mongoose);
+    var writestream = gfs.createWriteStream({
+        filename: 'my_file.txt'
+    });
+    fs.createReadStream('/some/path').pipe(writestream);
+}
+
 module.exports = { getUsers, getUserById, updateUser, deleteUser }
